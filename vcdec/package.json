@@ -1,0 +1,31 @@
+{
+    "name": "vcdec",
+    "description": "An IPFS based version control system with static file hosting features. Basic functions like repo initiation, staging, committing, and logging have been implemented. (Under active development)",
+    "exports": "./dist/index.js",
+    "scripts": {
+      "build": "npx tsc",
+      "start": "npx ts-node --esm src/index.ts",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+      "statik": "./dist/index.js"
+    },
+    "repository": {
+      "type": "git"
+    },
+    "keywords": ["version-control","ipfs","p2p","web3","filestorage"],
+    "license": "ISC",
+    "dependencies": {
+      "commander": "^11.0.0",
+      "figlet": "^1.6.0",
+      "ipfs-http-client": "^52.0.4-rc.4"
+    },
+    "devDependencies": {
+      "@types/figlet": "^1.5.6",
+      "@types/node": "^20.8.2",
+      "ts-node": "^10.9.1",
+      "typescript": "^5.1.6"
+    },
+    "type": "module"
+  }
+  
