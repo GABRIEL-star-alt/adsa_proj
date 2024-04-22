@@ -20,3 +20,15 @@ In our latest implementation, we've integrated K-nearest neighbors (KNN) using a
 To achieve this, we've devised a two-step process. Firstly, we've developed a function that encodes both the directory structure and the file contents into numerical data, enabling us to represent them effectively for KD tree processing. Secondly, with each commit made in the project, we update the KD tree by inserting these numeric data points alongside the branch name, effectively constructing a KD tree at every commit.
 
 When the 'check' function is invoked, it takes the query data point and traverses the KD tree to identify the most closely matching segment. Importantly, it considers intersections with other segments created in the 2D space by the KD tree. Additionally, to ensure scalability and accessibility, all points are stored in the InterPlanetary File System (IPFS), allowing us to retrieve previous sets of points and seamlessly incorporate new data points.
+
+#  requirements
+-IPFS kubo server should be installed
+-node version 18.17.1
+
+#  running the code
+-cd /adsa_proj
+-cd vcdec
+-cd demo
+-node ../dist/index.js <function name> args.
+
+
