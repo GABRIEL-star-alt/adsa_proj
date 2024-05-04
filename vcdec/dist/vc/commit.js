@@ -36,6 +36,7 @@ let points=[]
         let num1=await Comp(BranchContent);
         let num2 =await Comp2(BranchContent)
 //
+console.log(num2)
 console.log(num1,num2,"sdfdsfsdfsd")
 let pointss1 =[]
 if(prevSnapsho.length){

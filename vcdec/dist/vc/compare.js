@@ -44,44 +44,44 @@ function compareContent( queryData) {
         { path: 'c/b/b.txt', content: '' },
         { path: 'c/c.txt', content: 'sodfhliskdbfljkkbhdbkjhvksmnbmBHD<Jhcvk' }
     ];
-    let totalFiles = baseData.length;
-    let differingFiles = 0;
+    const baseFiles = baseData.map(entry => entry.path);
+    const queryFiles = queryData.map(entry => entry.path);
 
-    for (const baseFile of baseData) {
-        let found = false;
-        for (const queryFile of queryData) {
-            if (baseFile.path === queryFile.path) {
-                found = true;
-                const contentDifference = levenshteinDistance(baseFile.content, queryFile.content);
-                differingFiles += contentDifference;
-                break;
-            }
-        }
-        if (!found) {
-            differingFiles++; // Count as a differing file if not found in queryData
-        }
+    // Check added and removed files
+    const addedFiles = queryFiles.filter(file => !baseFiles.includes(file));
+    const removedFiles = baseFiles.filter(file => !queryFiles.includes(file));
+
+    let differenceScore = addedFiles.length + removedFiles.length;
+
+    // Compare content of files that exist in both structures
+    const commonFiles = baseFiles.filter(file => queryFiles.includes(file));
+    for (const file of commonFiles) {
+        const baseContent = baseData.find(entry => entry.path === file).content;
+        const queryContent = queryData.find(entry => entry.path === file).content;
+
+        // Calculate Levenshtein distance
+        const codeDifference = get(baseContent, queryContent);
+
+        // Add Levenshtein distance to the total difference score
+        differenceScore += codeDifference;
     }
 
-    // Calculate similarity score
-    const maxPossibleScore = baseData.length * baseData[0].content.length; // Max possible score based on length of content strings
-    const similarityScore = 1 - (differingFiles / maxPossibleScore);
-
-    return similarityScore;
+    return differenceScore;
 }
-async function calculateDirectoryDifference(dir1, dir2) {
-try{
-
-
-    const files1 = new Set(dir1.map(file => file.path));
-    const files2 = new Set(dir2.map(file => file.path));
-
-    const intersection = new Set([...files1].filter(x => files2.has(x)));
-    const union = new Set([...files1, ...files2]);
-
-    const similarityScore = intersection.size / union.size;
-
-    return     similarityScore
-}
+async function calculateDirectoryDifference(baseData,queryData) {
+    try {
+        const baseFiles = baseData.map(entry => entry.path);
+        const queryFiles = queryData.map(entry => entry.path);
+    
+        // Check added and removed files
+        const addedFiles = queryFiles.filter(file => !baseFiles.includes(file));
+        const removedFiles = baseFiles.filter(file => !queryFiles.includes(file));
+    
+        // Penalize based on the number of added or removed files
+        const differenceScore = addedFiles.length + removedFiles.length;
+    
+        return differenceScore;
+    }
 catch(err){
     console.log(err)
 }
@@ -126,15 +126,18 @@ let flag=false
         const dirname = Path.dirname(cwd + "/" + path1);
         fs.mkdirSync(dirname, { recursive: true });
         let data1;
+        let towrite=""
         for await (const itr of asyncitr) {
             data = Buffer.from(itr).toString();
-                fs.writeFileSync(cwd+"/dummy", data);
-          
-        }
-        data1=fs.readFileSync(cwd+"/dummy").toString();
-        fs.writeFileSync(cwd+"/dummy", "");
+towrite+=data
 
-        let obj1={path:path1,content:data1}
+}
+// console.log(towrite)
+fs.writeFileSync(cwd+"/dummy",towrite);
+        data1=fs.readFileSync(cwd+"/dummy").toString();
+        // fs.writeFileSync(cwd+"/dummy", "");
+
+        let obj1={path:path1,content:towrite}
         datacontent.push(obj1)
 
       

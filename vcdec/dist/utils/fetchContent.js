@@ -6,6 +6,7 @@ export async function commitContent(commitId, client) {
         prevSnapshot = JSON.parse(data).snapshot;
     }
     let prevContent = [];
+    console.log(prevSnapshot)
     asyncitr = client.cat(prevSnapshot);
     for await (const itr of asyncitr) {
         const data = Buffer.from(itr).toString();

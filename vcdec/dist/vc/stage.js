@@ -16,7 +16,7 @@ export async function Add(cwd, paths) {
         if (!prevCommit.length) {
             let snapshot = [];
             for (const path of paths) {
-                for await (const result of client.addAll(globSource(path, { recursive: true }))) {
+                for await (const result of client.addAll(globSource(path, { recursive: true ,duplex:true}))) {
                     if (fs.statSync(cwd + "/" + result.path).isDirectory())
                         continue;
                     snapshot.push(result);

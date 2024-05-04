@@ -22,8 +22,7 @@ function newNode(point) {
     return new Node(point);
 }
 
-// Inserts a new node and returns root of modified tree
-// The parameter depth is used to decide axis of comparison
+
 function insertRec(root, point, depth) {
     // Tree is empty?
     if (!root) {
@@ -33,8 +32,7 @@ function insertRec(root, point, depth) {
     // Calculate current dimension (cd) of comparison
     const cd = depth % k;
 
-    // Compare the new point with root on current dimension 'cd'
-    // and decide the left or right subtree
+
     console.log(point)
 
     if (point < root.point[cd]) {
@@ -46,15 +44,12 @@ function insertRec(root, point, depth) {
     return root;
 }
 
-// Function to insert a new point with given point in
-// KD Tree and return new root. It mainly uses above recursive
-// function "insertRec()"
+
  function insert(root, point) {
     return insertRec(root, point, 0);
 }
 
-// A utility method to determine if two Points are same
-// in K Dimensional space
+
 function arePointsSame(point1, point2) {
 
     // Compare individual coordinate values
@@ -66,9 +61,6 @@ function arePointsSame(point1, point2) {
 
     return true;
 }
-
-// Searches a Point represented by "point[]" in the K D tree.
-// The parameter depth is used to determine current axis.
 
 
 // Calculate Euclidean distance between two points
@@ -142,8 +134,8 @@ export async function neww(root,pointss,dataaa){
     let arrayOfArrays = pointss.map(obj => [obj.x, obj.y, obj.branch]);
 
 let n11=pointss.length
-console.log(n11)
-console.log(arrayOfArrays)
+// console.log(n11)
+// console.log(arrayOfArrays)
 for(let i=0;i<n11;i++){
 root=insert(root,arrayOfArrays[i])
 
